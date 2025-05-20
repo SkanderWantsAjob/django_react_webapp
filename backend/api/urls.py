@@ -12,8 +12,8 @@ auth_urls = [
 ]
 
 note_urls=[
-    path("notes/", NoteListCreate.as_view(), name="note-list"),
-    path("notes/delete/<int:pk>/", NoteDelete.as_view(), name="delete-note"),
+    path("api/notes/", NoteListCreate.as_view(), name="note-list"),
+    path("api/notes/delete/<int:pk>/", NoteDelete.as_view(), name="delete-note"),
     
 ]
 
