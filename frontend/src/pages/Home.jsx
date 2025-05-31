@@ -17,6 +17,7 @@ function Home() {
       setLoading(true);
       const response = await api.get("api/mood/");
       setMoods(response.data);
+      console.log(response.data)
     } catch (err) {
       setError("Failed to load moods");
       console.error(err);

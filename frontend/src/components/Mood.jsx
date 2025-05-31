@@ -1,4 +1,8 @@
 
+import { moods } from "../constants";
+import "../styles/Colors.css";
+import '../styles/Mood.css';
+
 
 function Mood({ mood, onDelete }) {
     const formattedDate = new Date(mood.created_at).toLocaleDateString("en-US", {
@@ -6,26 +10,30 @@ function Mood({ mood, onDelete }) {
         month: 'short',
         day: 'numeric'
     });
+    const moodData = moods.find(m => m.label.toLowerCase() === mood.mood_type.toLowerCase()) || {};
 
     return (
-        <div className="mood-container bg-white p-4 rounded-lg shadow mb-3">
-            <div className="flex justify-between items-start mb-2">
-                <h3 className="mood-title font-medium text-lg capitalize">
-                    {mood.mood_type || mood.title}
+        <div className={`mood-entry ${moodData?.color}-light`}>
+            <div className="mood-header">
+                <h3 className="mood-title">
+                    { mood.title} 
+                </h3>
+                <h3 className='mood-title'>
+                    {mood.mood_type}
                 </h3>
                 <button 
-                    className="delete-button text-red-500 hover:text-red-700 text-sm"
+                    className="delete-btn"
                     onClick={() => onDelete(mood.id)}
                 >
                     Delete
                 </button>
             </div>
             {mood.description && (
-                <p className="mood-description text-gray-600 mb-2">
+                <p className="mood-description">
                     {mood.description}
                 </p>
             )}
-            <p className="mood-date text-sm text-gray-400">
+            <p className="mood-date">
                 {formattedDate}
             </p>
         </div>

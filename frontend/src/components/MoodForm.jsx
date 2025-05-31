@@ -1,18 +1,10 @@
 import { useState } from 'react';
 import api from "../api";
+import { moods } from '../constants';
+import "../styles/Colors.css";
 import "../styles/MoodForm.css";
 
-const moods = [
-  { emoji: '🤩', label: 'Excited', color: 'purple' },
-  { emoji:'🥰', label: 'Loved', color: 'pink' },
-  { emoji: '😊', label: 'Happy', color: 'yellow' },
-  { emoji: '😐', label: 'Neutral', color: 'blue' },
-  { emoji:'😰' , label: 'Anxious', color: 'indigo' },
-  { emoji: '😢', label: 'Sad', color: 'red' },
-  { emoji:'😠' , label: 'Angry', color: 'orange' },
-  { emoji:'😴', label: 'Tired', color: 'gray' },
-  { emoji: '😲', label: 'Surprised', color: 'green' },
-];
+
 
 
 export default function MoodForm() {
@@ -23,15 +15,16 @@ export default function MoodForm() {
     e.preventDefault();
     if(selectedMood){
       try {
-        const response = await api.post('/mood', {
-          mood_type: selectedMood.label.toLowercase(),
+        const response = await api.post('api/mood/', {
+          mood_type: selectedMood.label.toLowerCase(),
           title:title,
           description:description
         }) 
 
       }
       catch(error){
-
+        console.error('Submission error:', error);
+        setError('Failed to save mood. Please try again.');
       }
       console.log('submitted' , {'mood' :selectedMood, description, title});
 

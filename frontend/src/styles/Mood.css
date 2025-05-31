@@ -1,0 +1,64 @@
+/* Mood Entry Container */
+.mood-entry {
+    width: 70%;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mood-entry:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Header Section */
+.mood-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+}
+
+/* Title */
+.mood-title {
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin: 0;
+    color: #333;
+    text-transform: capitalize;
+}
+
+/* Description */
+.mood-description {
+    color: #666;
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+    overflow-wrap: break-word;
+}
+
+/* Date */
+.mood-date {
+    font-size: 0.875rem;
+    color: #999;
+    margin: 0;
+}
+
+/* Delete Button */
+.delete-btn {
+    background: none;
+    border: none;
+    color: #ef4444;
+    font-size: 0.875rem;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+   
+}
+
+.delete-btn:hover {
+    
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
