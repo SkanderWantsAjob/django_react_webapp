@@ -1,86 +1,85 @@
 import { useEffect, useState } from "react";
 import api from '../api';
-import Note from "../components/Note";
-import '../styles/Home.css';
+import Mood from "../components/Mood";
+import MoodForm from "../components/MoodForm"; // We'll create this
 
+function Home() {
+  const [moods, setMoods] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  useEffect(() => {
+    getMoods();
+  }, []);
 
+  const getMoods = async () => {
+    try {
+      setLoading(true);
+      const response = await api.get("api/mood/");
+      setMoods(response.data);
+    } catch (err) {
+      setError("Failed to load moods");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-function Home  () {
-  
-  const [notes, setNotes]= useState([]);
-  const [content, setContent]= useState("");
-  const [title, setTitle]= useState("");
+  const deleteMood = async (id) => {
+    try {
+      await api.delete(`/api/mood/delete/${id}/`);
+      setMoods(moods.filter(mood => mood.id !== id));
+    } catch (err) {
+      alert("Failed to delete mood");
+      console.error(err);
+    }
+  };
 
-  useEffect(()=> {
-    getNotes();
-  }, [])
-  
-  const getNotes=()=> {
-    api.get("api/notes/").then((res)=> res.data)
-    .then((data)=> {setNotes(data); console.log(data);})
-      .catch((err)=> alert(err))
-    
-  } 
+  const handleAddMood = async (newMood) => {
+    try {
+      const response = await api.post("/api/mood/", newMood);
+      setMoods([response.data, ...moods]);
+      return true;
+    } catch (err) {
+      alert("Failed to create mood");
+      console.error(err);
+      return false;
+    }
+  };
 
-  const createNote = (e) => {
-    e.preventDefault();
-    api
-        .post("/api/notes/", { content, title })
-        .then((res) => {
-            if (res.status === 201) alert("Note created!");
-            else alert("Failed to make note.");
-            getNotes();
-        })
-        .catch((err) => alert(err));
-};
-
-  
-  const deleteNote = (id) => {
-    api
-        .delete(`/api/notes/delete/${id}/`)
-        .then((res) => {
-            if (res.status === 204) alert("Note deleted!");
-            else alert("Failed to delete note.");
-            getNotes();
-        })
-        .catch((error) => alert(error));
-};
-
-return (
-  <div>
-      <div>
-          <h2>Notes</h2>
-          {notes.map((note) => (
-              <Note note={note} onDelete={deleteNote} key={note.id} />
-          ))}
+  return (
+    <div className="container mx-auto p-4 max-w-2xl">
+      <h1 className="text-2xl font-bold mb-6 text-center">Mood Tracker</h1>
+      
+      {/* Mood Form */}
+      <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 className="text-xl font-semibold mb-4">How are you feeling today?</h2>
+        <MoodForm onAddMood={handleAddMood} />
       </div>
-      <h2>Create a Note</h2>
-      <form onSubmit={createNote}>
-          <label htmlFor="title">Title:</label>
-          <br />
-          <input
-              type="text"
-              id="title"
-              name="title"
-              required
-              onChange={(e) => setTitle(e.target.value)}
-              value={title}
-          />
-          <label htmlFor="content">Content:</label>
-          <br />
-          <textarea
-              id="content"
-              name="content"
-              required
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-          ></textarea>
-          <br />
-          <input type="submit" value="Submit"></input>
-      </form>
-  </div>
-);
+
+      {/* Mood List */}
+      <div>
+        <h2 className="text-xl font-semibold mb-4">Your Mood History</h2>
+        {loading ? (
+          <p>Loading moods...</p>
+        ) : error ? (
+          <p className="text-red-500">{error}</p>
+        ) : moods.length === 0 ? (
+          <p>No moods recorded yet. Add your first mood!</p>
+        ) : (
+          <div className="space-y-4">
+            {moods.map((mood) => (
+              <Mood 
+                mood={mood} 
+                onDelete={deleteMood} 
+                key={mood.id} 
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
 
-export default Home
+export default Home;

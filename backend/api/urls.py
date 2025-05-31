@@ -2,7 +2,7 @@
 
 from django.urls import include, path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from .views import CreateUserView, NoteListCreate, NoteDelete
+from .views import CreateUserView, MoodDelete, MoodListCreate
 
 auth_urls = [
     path("api/user/register/", CreateUserView.as_view(), name="register"),
@@ -11,10 +11,10 @@ auth_urls = [
     path("api-auth/", include("rest_framework.urls"))
 ]
 
-note_urls=[
-    path("api/notes/", NoteListCreate.as_view(), name="note-list"),
-    path("api/notes/delete/<int:pk>/", NoteDelete.as_view(), name="delete-note"),
+mood_urls=[
+    path("api/mood/", MoodListCreate.as_view(), name="mood-list"),
+    path("api/mood/delete/<int:pk>/", MoodDelete.as_view(), name="delete-mood"),
     
 ]
 
-urlpatterns = auth_urls + note_urls
+urlpatterns = auth_urls + mood_urls
