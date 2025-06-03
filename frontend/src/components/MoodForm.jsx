@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import api from "../api";
 import { moods } from '../constants';
 import "../styles/Colors.css";
 import "../styles/MoodForm.css";
@@ -7,43 +6,55 @@ import "../styles/MoodForm.css";
 
 
 
-export default function MoodForm() {
+export default function MoodForm( {onBgColorChange, onAddMood}) {
   const [selectedMood, setSelectedMood] = useState(null);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+
+  const moodColorMap = moods.reduce((map, mood) => {
+    map[mood.label.toLowerCase()] = mood.color;
+    return map;
+  }, {});
+
+  const handleMoodSelect = (mood) => {
+    setSelectedMood(mood);
+    // Change background when mood is selected
+    constmod=moodColorMap[mood.label.toLowerCase()]
+    console.log({mod})
+    onBgColorChange(moodColorMap[mood.label.toLowerCase()] || 'home-bg');
+  };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(selectedMood){
-      try {
-        const response = await api.post('api/mood/', {
-          mood_type: selectedMood.label.toLowerCase(),
-          title:title,
-          description:description
-        }) 
-
-      }
-      catch(error){
-        console.error('Submission error:', error);
+  
+    if (selectedMood && onAddMood) {
+      const newMood = {
+        mood_type: selectedMood.label.toLowerCase(),
+        title,
+        description
+      };
+  
+      const success = await onAddMood(newMood);
+  
+      if (success) {
+        setSelectedMood(null);
+        setTitle('');
+        setDescription('');
+      } else {
         setError('Failed to save mood. Please try again.');
       }
-      console.log('submitted' , {'mood' :selectedMood, description, title});
-
     }
-
-    setSelectedMood(null);
-    
-
-  }
+  };
 
   return (
-    <div className='form-mood-container'>
+    <div className='form-mood-container glass'>
 
     <div className="mood-grid ">
       {moods.map((mood) => (
         <button
           key={mood.label}
           type="button"
-          onClick={() => setSelectedMood(mood)}
+          onClick={() => handleMoodSelect(mood)}
           className={`mood-button ${mood.color} ${
             selectedMood?.label === mood.label ? 'selected' : ''
           }`}

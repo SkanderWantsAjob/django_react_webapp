@@ -3,6 +3,11 @@ div {
     font-family: Arial, sans-serif;
 }
 
+.home-bg{
+    background: #e31b1b;
+    background: radial-gradient(circle, rgb(250, 161, 26) 0%, rgb(255, 221, 1) 100%);
+}
+
 /* Styles for the notes section */
 .notes-section {
     margin-bottom: 2rem;
@@ -65,3 +70,6 @@ form input[type="submit"] {
 
 form input[type="submit"]:hover {
     background-color: #0056b3; }
+
+
+    
