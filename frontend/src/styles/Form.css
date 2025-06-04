@@ -1,91 +1,169 @@
-.form-container {
-    display: flex;  
-    flex-direction: column;
-    place-items: center;
-    margin: 50px auto;
-    padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(163, 181, 230, 0.08);
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 20px;
+}
+
+.form-wrapper {
     width: 100%;
     max-width: 420px;
-    background: rgb(255, 255, 255);
-    border: 2px solid rgba(1, 56, 233, 0.05);
+    perspective: 1000px;
+}
+
+.form-container {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
     transition: all 0.3s ease;
 }
 
-.form-container:hover {
-    box-shadow: 0 12px 30px rgba(6, 24, 56, 0.12);
-    transform: translateY(-2px);
+.form-title {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    font-weight: 600;
 }
 
-.form-container h1 {
-    color: #2c3e50;
-    margin-bottom: 1.8rem;
-    font-size: 1.8rem;
-    font-weight: 600;
+.input-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.input-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    font-size: 1.1rem;
 }
 
 .form-input {
     width: 100%;
-    padding: 12px 15px;
-    margin: 12px 0;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    box-sizing: border-box;
+    padding: 12px 15px 12px 45px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
     font-size: 1rem;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
+    background: #f8fafc;
 }
 
 .form-input:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
     outline: none;
+    background: white;
 }
 
-.form-input::placeholder {
-    color: #95a5a6;
+.password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 0;
+}
+
+.password-toggle:hover {
+    color: #64748b;
+}
+
+.form-options {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.forgot-password {
+    color: #3b82f6;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.forgot-password:hover {
+    color: #2563eb;
+    text-decoration: underline;
 }
 
 .form-button {
     width: 100%;
     padding: 12px;
-    margin: 25px 0 15px;
-    background: linear-gradient(135deg, #007bff, #0062cc);
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
     color: white;
     border: none;
-    border-radius: 8px;
-    cursor: pointer;
+    border-radius: 10px;
     font-size: 1rem;
     font-weight: 500;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
+    cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
 .form-button:hover {
-    background: linear-gradient(135deg, #0062cc, #0056b3);
-    box-shadow: 0 6px 8px rgba(0, 123, 255, 0.3);
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
     transform: translateY(-1px);
 }
 
-.form-button:active {
-    transform: translateY(0);
+.form-button:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+    transform: none;
 }
 
-/* Add some extra polish */
-.form-footer {
-    margin-top: 1rem;
+.error-message {
+    background: #fee2e2;
+    color: #dc2626;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
     font-size: 0.9rem;
-    color: #7f8c8d;
+    text-align: center;
 }
 
-.form-footer a {
-    color: #007bff;
+.form-footer {
+    margin-top: 1.5rem;
+    text-align: center;
+    color: #64748b;
+}
+
+.switch-auth-link {
+    color: #3b82f6;
     text-decoration: none;
     font-weight: 500;
+    transition: color 0.3s ease;
 }
 
-.form-footer a:hover {
+.switch-auth-link:hover {
+    color: #2563eb;
     text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .form-container {
+        padding: 1.5rem;
+    }
+
+    .form-title {
+        font-size: 1.5rem;
+    }
+
+    .form-options {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
 }

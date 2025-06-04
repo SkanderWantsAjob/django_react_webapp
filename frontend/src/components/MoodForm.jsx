@@ -19,9 +19,9 @@ export default function MoodForm( {onBgColorChange, onAddMood}) {
   const handleMoodSelect = (mood) => {
     setSelectedMood(mood);
     // Change background when mood is selected
-    constmod=moodColorMap[mood.label.toLowerCase()]
+    const mod=moodColorMap[mood.label.toLowerCase()]
     console.log({mod})
-    onBgColorChange(moodColorMap[mood.label.toLowerCase()] || 'home-bg');
+    onBgColorChange(mod || 'home-bg');
   };
   
   const handleSubmit = async (e) => {
